@@ -213,6 +213,16 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- Define an alias for Telescope
+
+vim.keymap.set('n', '<space>tc', ':Telescope<CR>')
+vim.keymap.set('n', '<space>ts', ':Telescope live_grep<CR>')
+vim.keymap.set('n', '<space>tf', ':Telescope find_files<CR>')
+vim.keymap.set('n', '<space>tb', ':Telescope buffers<CR>')
+vim.keymap.set('n', '<space>tx', ':Telescope file_browser path=%:p:h select_buffer=true<CR>')
+vim.keymap.set('n', '<space>xc', ':NvimTreeToggle<CR>')
+vim.keymap.set('n', '<space>xf', ':NvimTreeFocus<CR>')
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -702,7 +712,8 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          --['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -841,13 +852,31 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
+  {
+    'nvim-tree/nvim-tree.lua',
+    lazy = true,
+    config = function()
+      require('nvim-tree').setup()
+    end,
+  },
+  {
+    'nvim-telescope/telescope-frecency.nvim',
+    config = function()
+      require('telescope').load_extension 'frecency'
+    end,
+  },
+  {
+    'nvim-telescope/telescope-file-browser.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+  },
+  { 'wakatime/vim-wakatime', lazy = false },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
