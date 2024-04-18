@@ -215,6 +215,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Define an alias for Telescope
 
+require 'config'
+
 vim.keymap.set('n', '<space>tc', ':Telescope<CR>')
 vim.keymap.set('n', '<space>ts', ':Telescope live_grep<CR>')
 vim.keymap.set('n', '<space>tf', ':Telescope find_files<CR>')
@@ -865,25 +867,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  {
-    'nvim-tree/nvim-tree.lua',
-    lazy = true,
-    config = function()
-      require('nvim-tree').setup()
-    end,
-  },
-  {
-    'nvim-telescope/telescope-frecency.nvim',
-    config = function()
-      require('telescope').load_extension 'frecency'
-    end,
-  },
-  {
-    'nvim-telescope/telescope-file-browser.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-  },
-  { 'wakatime/vim-wakatime', lazy = false },
-
+ 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
